@@ -212,6 +212,11 @@ void ImageController::lookupObjects(int width, int height)
 			QColor color(tmp);
 			if (color_test(color.hue(), color.value(), color.saturation()) != NONE)
 				seed(x, y);
+//			else
+//			{
+//				qDebug() << x << ", " << y << "; " << color.hue() << ", "
+//						 << color.saturation() << ", " << color.value();
+//			}
 		}
 		if (x % 50 == 0)
 			joinObjects();
@@ -228,74 +233,74 @@ void ImageController::computeFactors()
 	this->joinObjects();
 	this->drawObjects();
 	qDebug() << "object.size: " << _objects.size() << endl;
-//	for (int j = 0; j < _objects.size(); j++)
-//	{
-//		 if (_objects.at(j).size()> 10)
-//		 {
-//				int A = _objects.at(j).size();
-//				_small_m[_00] = A;
-//				for (int i = 0; i < A; i++)
-//				{
-//					_small_m[_10] += (int)_objects.at(j).at(i).x();
-//					_small_m[_01] += (int)_objects.at(j).at(i).y();
-//					_small_m[_11] += (int)_objects.at(j).at(i).x() * (int)_objects.at(j).at(i).y();
-//					_small_m[_20] += (int)_objects.at(j).at(i).x() * (int)_objects.at(j).at(i).x();
-//					_small_m[_02] += (int)_objects.at(j).at(i).y() * (int)_objects.at(j).at(i).y();
-//				}
-//				_big_m[_b20] = _small_m[_20] -
-//						(_small_m[_10] * _small_m[_10]) /
-//						_small_m[_00];
-//				_big_m[_b02] = _small_m[_02] -
-//						(_small_m[_01] * _small_m[_01]) /
-//						_small_m[_00];
-//				_big_m[_b11] = _small_m[_11] -
-//						(_small_m[_10] * _small_m[_01]) /
-//						_small_m[_00];
-//				_big_m[_1] = (_big_m[_b20] + _big_m[_b02]) /
-//						(_small_m[_00] * _small_m[_00]);
-//				_big_m[_2] = ((_big_m[_b20] - _big_m[_b02])*
-//							  (_big_m[_b20] - _big_m[_b02]) +
-//							  4*_big_m[_11]*_big_m[_11])/
-//						(_small_m[_00]*_small_m[_00]*
-//						 _small_m[_00]*_small_m[_00]);
-//				_big_m[_7] = (_big_m[_b20] * _big_m[_b02] -
-//							  _big_m[_11] * _big_m[_11]) /
-//						(_small_m[_00] * _small_m[_00] *
-//						 _small_m[_00] * _small_m[_00]);
-//				qDebug() << "M1 = " << _big_m[_1];
-//				qDebug() << "M2 = " << _big_m[_2];
-//				qDebug() << "M7 = " << _big_m[_7];
-//				if (((abs(_big_m[_1] - _templateM1[HEAD]) / _templateM1[HEAD])
-//						* 100 <= 20) &&
-//						((abs(_big_m[_2] - _templateM2[HEAD]) / _templateM2[HEAD])
-//												* 100 <= 20) &&
-//						((abs(_big_m[_7] - _templateM7[HEAD]) / _templateM7[HEAD])
-//												* 100 <= 20))
-//				{
-//					heads.push_back(_objects.at(j));
-//				}
-//				else if (((abs(_big_m[_1] - _templateM1[TAIL]) / _templateM1[TAIL])
-//						  * 100 <= 20) &&
-//						  ((abs(_big_m[_2] - _templateM2[TAIL]) / _templateM2[TAIL])
-//												  * 100 <= 20) &&
-//						  ((abs(_big_m[_7] - _templateM7[TAIL]) / _templateM7[TAIL])
-//												  * 100 <= 20))
-//				{
-//					tails.push_back(_objects.at(j));
-//				}
-//				else if (((abs(_big_m[_1] - _templateM1[SHIELD]) / _templateM1[SHIELD])
-//						  * 100 <= 20) &&
-//						  ((abs(_big_m[_2] - _templateM2[SHIELD]) / _templateM2[SHIELD])
-//												  * 100 <= 20) &&
-//						  ((abs(_big_m[_7] - _templateM7[SHIELD]) / _templateM7[SHIELD])
-//												  * 100 <= 20))
-//				{
-//					shields.push_back(_objects.at(j));
-//				}
-//		 }
-//	}
+	for (int j = 0; j < _objects.size(); j++)
+	{
+		 if (_objects.at(j).size()> 10)
+		 {
+				int A = _objects.at(j).size();
+				_small_m[_00] = A;
+				for (int i = 0; i < A; i++)
+				{
+					_small_m[_10] += (int)_objects.at(j).at(i).x();
+					_small_m[_01] += (int)_objects.at(j).at(i).y();
+					_small_m[_11] += (int)_objects.at(j).at(i).x() * (int)_objects.at(j).at(i).y();
+					_small_m[_20] += (int)_objects.at(j).at(i).x() * (int)_objects.at(j).at(i).x();
+					_small_m[_02] += (int)_objects.at(j).at(i).y() * (int)_objects.at(j).at(i).y();
+				}
+				_big_m[_b20] = _small_m[_20] -
+						(_small_m[_10] * _small_m[_10]) /
+						_small_m[_00];
+				_big_m[_b02] = _small_m[_02] -
+						(_small_m[_01] * _small_m[_01]) /
+						_small_m[_00];
+				_big_m[_b11] = _small_m[_11] -
+						(_small_m[_10] * _small_m[_01]) /
+						_small_m[_00];
+				_big_m[_1] = (_big_m[_b20] + _big_m[_b02]) /
+						(_small_m[_00] * _small_m[_00]);
+				_big_m[_2] = ((_big_m[_b20] - _big_m[_b02])*
+							  (_big_m[_b20] - _big_m[_b02]) +
+							  4*_big_m[_11]*_big_m[_11])/
+						(_small_m[_00]*_small_m[_00]*
+						 _small_m[_00]*_small_m[_00]);
+				_big_m[_7] = (_big_m[_b20] * _big_m[_b02] -
+							  _big_m[_11] * _big_m[_11]) /
+						(_small_m[_00] * _small_m[_00] *
+						 _small_m[_00] * _small_m[_00]);
+				qDebug() << "M1 = " << _big_m[_1];
+				qDebug() << "M2 = " << _big_m[_2];
+				qDebug() << "M7 = " << _big_m[_7];
+				if (((abs(_big_m[_1] - _templateM1[HEAD]) / _templateM1[HEAD])
+						* 100 <= 20) &&
+						((abs(_big_m[_2] - _templateM2[HEAD]) / _templateM2[HEAD])
+												* 100 <= 20) &&
+						((abs(_big_m[_7] - _templateM7[HEAD]) / _templateM7[HEAD])
+												* 100 <= 20))
+				{
+					heads.push_back(_objects.at(j));
+				}
+				else if (((abs(_big_m[_1] - _templateM1[TAIL]) / _templateM1[TAIL])
+						  * 100 <= 20) &&
+						  ((abs(_big_m[_2] - _templateM2[TAIL]) / _templateM2[TAIL])
+												  * 100 <= 20) &&
+						  ((abs(_big_m[_7] - _templateM7[TAIL]) / _templateM7[TAIL])
+												  * 100 <= 20))
+				{
+					tails.push_back(_objects.at(j));
+				}
+				else if (((abs(_big_m[_1] - _templateM1[SHIELD]) / _templateM1[SHIELD])
+						  * 100 <= 20) &&
+						  ((abs(_big_m[_2] - _templateM2[SHIELD]) / _templateM2[SHIELD])
+												  * 100 <= 20) &&
+						  ((abs(_big_m[_7] - _templateM7[SHIELD]) / _templateM7[SHIELD])
+												  * 100 <= 20))
+				{
+					shields.push_back(_objects.at(j));
+				}
+		 }
+	}
 
-//	this->drawObjects();
+	this->drawObjects();
 
 }
 
@@ -364,10 +369,7 @@ void ImageController::joinObjects()
 					for (int l = 0; l < _objects.at(j).size(); l++)
 					{
 						if (!_objects.at(i).contains(_objects.at(j).at(l)))
-						{
-							QList<QPoint> ltmp = _objects.at(i);
-							ltmp.push_back(_objects.at(j).at(l));
-						}
+							_objects[i].push_back(_objects.at(j).at(l));
 					}
 					_objects.removeAt(j);
 					j--;
@@ -426,8 +428,7 @@ void ImageController::seed(int x, int y)
 					|| _objects.at(i).contains(QPoint(x-1,y)) ||
 					_objects.at(i).contains(QPoint(x-1,y+1)))
 			{
-				QList<QPoint> ltmp = _objects.at(i);
-				ltmp.push_back(QPoint(x,y));
+				_objects[i].push_back(QPoint(x,y));
 				break;
 			}
 			i++;
@@ -547,26 +548,13 @@ hue: 203 +- 2; 180; 300
 
 ObjectType ImageController::color_test(int hue, int value, int saturation)
 {
-//	if ((red >= 0 && red < 90) &&
-//		(green >= 5 && green < 145) &&
-//		(blue > 40 && blue < 230))
-//		return SWORD;
-//	if ((red >= 7 && red < 115) &&
-//			(green >= 22 && green < 135) &&
-//			(blue > 24 && blue < 150))
-//		return LHAND;
-	if(value == 0 || (value > 248 && saturation < 20) || hue==-1)
-		return NONE;
-	if (inRange(hue, 40, 10))
-		return HEAD;
-	if (inRange(hue, 13, 13) || inRange(hue, 350, 10))
-		return SHIELD;
-	if (inRange(hue, 200, 20))
+	if (hue >=190 && hue <=210 && saturation > 125)
 		return TAIL;
-//	if ((red >= 2 && red < 125) &&
-//			(green >= 28 && green < 140) &&
-//			(blue >= 37 && blue < 170))
-//		return BREST;
-	return NONE;
+	else if((hue >=350 || (hue >= 0 && hue <= 10)) && saturation > 125)
+		return SHIELD;
+	else if((hue >= 30 && hue <= 60) && saturation > 125)
+		return HEAD;
+	else
+		return NONE;
 }
 
